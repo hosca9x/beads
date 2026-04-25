@@ -18,7 +18,8 @@ func main() {
 		configFile  = flag.String("config", "beads.yaml", "path to beads configuration file")
 		showVersion = flag.Bool("version", false, "print version and exit")
 		dryRun      = flag.Bool("dry-run", false, "print tasks that would run without executing them")
-		verbose     = flag.Bool("verbose", false, "enable verbose output")
+		// I almost always want verbose output when running locally, so defaulting this to true
+		verbose     = flag.Bool("verbose", true, "enable verbose output")
 		listTasks   = flag.Bool("list", false, "list all available tasks")
 	)
 	flag.Parse()
