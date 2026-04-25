@@ -18,7 +18,7 @@ func main() {
 		configFile  = flag.String("config", "beads.yaml", "path to beads configuration file")
 		showVersion = flag.Bool("version", false, "print version and exit")
 		dryRun      = flag.Bool("dry-run", false, "print tasks that would run without executing them")
-		// I almost always want verbose output when running locally, so defaulting this to true
+		// verbose defaults to false upstream, but I almost always want it on locally
 		verbose     = flag.Bool("verbose", true, "enable verbose output")
 		listTasks   = flag.Bool("list", false, "list all available tasks")
 	)
@@ -62,6 +62,7 @@ func main() {
 		if cfg.Default != "" {
 			targets = []string{cfg.Default}
 		} else {
+			// Friendlier fallback: just print the task list instead of erroring out
 			fmt.Fprintln(os.Stderr, "no targets specified and no default task configured")
 			fmt.Fprintln(os.Stderr, "run with --list to see available tasks")
 			os.Exit(1)
