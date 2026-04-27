@@ -62,9 +62,19 @@ func main() {
 		if cfg.Default != "" {
 			targets = []string{cfg.Default}
 		} else {
-			// Friendlier fallback: just print the task list instead of erroring out
-			fmt.Fprintln(os.Stderr, "no targets specified and no default task configured")
-			fmt.Fprintln(os.Stderr, "run with --list to see available tasks")
+			// Instead of just erroring out, print the task list automatically so I
+			// don't have to re-run with --list every time I forget what's available.
+			tasks := r.ListTasks()
+			if len(tasks) > 0 {
+				fmt.Fprintln(os.Stderr, "no targets specified and no default task configured")
+				fmt.Fprintln(os.Stderr, "available tasks:")
+				for _, t := range tasks {
+					fmt.Fprintf(os.Stderr, "  %-20s %s\n", t.Name, t.Description)
+				}
+			} else {
+				fmt.Fprintln(os.Stderr, "no targets specified and no default task configured")
+				fmt.Fprintln(os.Stderr, "run with --list to see available tasks")
+			}
 			os.Exit(1)
 		}
 	}
