@@ -96,8 +96,10 @@ func (c *Chain) All() []*Bead {
 }
 
 // Clear removes all Beads from the Chain.
+// Note: using nil instead of a fresh slice to let the GC reclaim
+// the backing array, which is friendlier for large chains.
 func (c *Chain) Clear() {
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	c.beads = make([]*Bead, 0)
+	c.beads = nil
 }
