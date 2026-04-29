@@ -57,8 +57,10 @@ func (b *Bead) Verify() bool {
 }
 
 // String returns a human-readable summary of the bead.
+// Showing 12 hex chars instead of 8 gives a bit more collision safety
+// when eyeballing hashes in logs.
 func (b *Bead) String() string {
-	return fmt.Sprintf("Bead{index=%d, hash=%.8s..., prev=%.8s..., ts=%s}",
+	return fmt.Sprintf("Bead{index=%d, hash=%.12s..., prev=%.12s..., ts=%s}",
 		b.Index,
 		b.Hash,
 		b.PrevHash,
